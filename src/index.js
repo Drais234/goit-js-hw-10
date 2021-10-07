@@ -83,7 +83,3 @@ function renderCountryInfo(country) {
 };
 
 
-countriesList.style.listStyle= 'none';
-countryItem.style.listStyle = 'none';
-countryItem.style.marginLeft = '25px';
-countryItem.style.marginTop = '30px';
