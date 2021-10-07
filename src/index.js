@@ -81,7 +81,7 @@ function renderCountryInfo(country) {
     
   countryItem.innerHTML = markup;
 };
-
+countriesList.style.liststyle = 'none';
 countryItem.style.listStyle = 'none';
 countryItem.style.marginLeft = '15px';
 countryItem.style.marginTop = '20px';
