@@ -15,33 +15,33 @@ const countryItem = document.querySelector('.country-info');
 const inputNode = document.querySelector('#search-box');
 
 function onInput() {
-    const inputText = inputNode.value.trim();
+  const inputText = inputNode.value.trim();
 
-    countriesList.innerHTML = '';
-    countryItem.innerHTML = '';
+  countriesList.innerHTML = '';
+  countryItem.innerHTML = '';
 
-    if (!inputText) {
+  if (!inputText) {
+    return;
+  }
+
+  fetchCountries(inputText)
+    .then(countries => {
+      if (countries.status === 404) {
+        Notiflix.Notify.failure('Oops, there is no country with that name.');
         return;
-    }
-
-    fetchCountries(inputText)
-        .then((countries) => {
-            if (countries.status === 404) {
-                Notiflix.Notify.failure("Oops, there is no country with that name.");
-                return;
-            }
-            if (countries.length > 10) {
-                Notiflix.Notify.info('Too many matches found. Please enter a more specific name');
-                return;
-            }
-            if (countries.length > 1) {
-                renderCountriesList(countries);
-                return;
-            }
-            renderCountryInfo(countries);
-        })
-        .catch((error) => console.log(error));
-};
+      }
+      if (countries.length > 10) {
+        Notiflix.Notify.info('Too many matches found. Please enter a more specific name');
+        return;
+      }
+      if (countries.length > 1) {
+        renderCountriesList(countries);
+        return;
+      }
+      renderCountryInfo(countries);
+    })
+    .catch(error => console.log(error));
+}
 
 inputNode.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
@@ -49,7 +49,7 @@ function renderCountriesList(countries) {
   countryItem.innerHTML = '';
 
   const markup = countries
-    .map((country) => {
+    .map(country => {
       return `
         <li class="country-list-item">
           <img src='${country.flag}' alt='${country.name} flag' width='40' />
@@ -57,16 +57,16 @@ function renderCountriesList(countries) {
         </li>
         `;
     })
-    .join("");
-    
+    .join('');
+
   countriesList.innerHTML = markup;
-};
+}
 
 function renderCountryInfo(country) {
   countriesList.innerHTML = '';
 
   const markup = country
-    .map((country) => {
+    .map(country => {
       return `
         <div class="renderCountryInfo-firstString">
           <img src='${country.flag}' alt='${country.name} flag' width='40' />
@@ -77,9 +77,7 @@ function renderCountryInfo(country) {
         <p><b>Languages</b>: ${country.languages.map(item => ` ${item.name}`)}</p>
         `;
     })
-    .join("");
-    
+    .join('');
+
   countryItem.innerHTML = markup;
-};
-
-
+}
